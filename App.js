@@ -58,7 +58,7 @@ export default class App extends React.Component {
         ) : (
             <Text style={textFont}>You got stuff to do!</Text>
           )}
-        <TextInput
+        <TextInput style={styles.inputBox}
           onChangeText={this.handleTextChange}
           value={this.state.text}
           placeholder="Add Todo"
@@ -102,16 +102,29 @@ const styles = StyleSheet.create({
   textFont: {
     fontSize: 28
   },
+  inputBox: {
+    width: 300,
+    height: 40,
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    marginTop: 40,
+  },
   uncomplete: {
+    marginTop: 20,
+    fontSize: 30,
     fontWeight: 'normal',
     fontStyle: 'normal',
-    lineHeight: 20,
+    lineHeight: 40,
 
   },
   completed: {
+    marginTop: 20,
+    fontSize: 30,
     fontWeight: '900',
     fontStyle: 'italic',
-    lineHeight: 20,
+    lineHeight: 40,
   },
 });
 
