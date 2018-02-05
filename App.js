@@ -18,7 +18,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.state.todos)
+
   }
 
   handleButtonPress = () => {
@@ -29,7 +29,6 @@ export default class App extends React.Component {
         todos: [...todos, { key: text + todos.length, text, completed: false }]
       };
     });
-    console.log(this.state.todos);
   };
 
   handleTextChange = text => {
@@ -37,7 +36,6 @@ export default class App extends React.Component {
   };
 
   handleComplete = (id) => {
-    console.log(id)
     this.setState(prevState => {
       let oldTodos = prevState.todos;
       let comp = oldTodos[id].completed;
@@ -46,8 +44,17 @@ export default class App extends React.Component {
         todos: oldTodos
       }
     })
-    console.log(this.state.todos)
     this.forceUpdate();
+  }
+
+  handleDelete = (id) => {
+    this.setState(prevState => {
+      let oldTodos = prevState.todos;
+      oldTodos.splice(id, 1);
+      return {
+        todos: oldTodos
+      }
+    })
   }
 
   render() {
@@ -78,8 +85,8 @@ export default class App extends React.Component {
             } else {
               return (
                 <View key={item.key} id={index}>
-                  <Text style={styles.completed} onPress={() => this.handleComplete(index)}>
-                    {item.text} {'Completed!'}
+                  <Text style={styles.completed} onPress={() => this.handleDelete(index)}>
+                    {item.text}
                   </Text>
                 </View>
               );
@@ -123,6 +130,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 30,
     fontWeight: '900',
+    textDecorationLine: 'line-through',
     fontStyle: 'italic',
     lineHeight: 40,
   },
