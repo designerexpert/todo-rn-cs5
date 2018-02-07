@@ -5,97 +5,19 @@ import {
   View,
   Button,
   TextInput,
-  FlatList
+  FlatList,
+  AsyncStorage,
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import TodoList from './TodoList';
 
-export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      text: '',
-      todos: []
-    };
-  }
-
-  componentDidMount() {
-
-  }
-
-  handleButtonPress = () => {
-    this.setState(prevState => {
-      let { text, todos } = prevState;
-      return {
-        text: '',
-        todos: [...todos, { key: text + todos.length, text, completed: false }]
-      };
-    });
-  };
-
-  handleTextChange = text => {
-    this.setState({ text });
-  };
-
-  handleComplete = (id) => {
-    this.setState(prevState => {
-      let oldTodos = prevState.todos;
-      let comp = oldTodos[id].completed;
-      oldTodos[id].completed = !comp;
-      return {
-        todos: oldTodos
-      }
-    })
-    this.forceUpdate();
-  }
-
-  handleDelete = (id) => {
-    this.setState(prevState => {
-      let oldTodos = prevState.todos;
-      oldTodos.splice(id, 1);
-      return {
-        todos: oldTodos
-      }
-    })
-  }
-
-  render() {
-    return (
-      <View style={container}>
-        {this.state.todos.length === 0 ? (
-          <Text style={textFont}>You're free</Text>
-        ) : (
-            <Text style={textFont}>You got stuff to do!</Text>
-          )}
-        <TextInput style={styles.inputBox}
-          onChangeText={this.handleTextChange}
-          value={this.state.text}
-          placeholder="Add Todo"
-        />
-        <Button onPress={() => this.handleButtonPress()} title="Add Todo" />
-        <FlatList extraData={this.state}
-          data={this.state.todos}
-          renderItem={({ item, index }) => {
-            if (!item.completed) {
-              return (
-                <View key={item.key} id={index}>
-                  <Text style={styles.uncomplete} onPress={() => this.handleComplete(index)}>
-                    {item.text}
-                  </Text>
-                </View>
-              );
-            } else {
-              return (
-                <View key={item.key} id={index}>
-                  <Text style={styles.completed} onPress={() => this.handleDelete(index)}>
-                    {item.text}
-                  </Text>
-                </View>
-              );
-            }
-          }}
-        />
-      </View>
-    );
-  }
+const Home = () => {
+  return (
+    <View style={container}>
+      <Text>Home Page</Text>
+      <Button title='Get to My Todos!' onPress={() => props.navigation.navigate('TodoList')} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -137,3 +59,10 @@ const styles = StyleSheet.create({
 });
 
 const { container, textFont } = styles;
+
+const Routes = StackNavigator({
+  Home: { screen: Home },
+  TodoList: { screen: TodoList }
+});
+
+export default Routes;
