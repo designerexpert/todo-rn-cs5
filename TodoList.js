@@ -40,9 +40,12 @@ export default class TodoList extends React.Component {
 
     componentWillUnmount() {
         const todos = this.state.todos.slice();
-        AsyncStorage.setItem('todos', JSON.stringify(todos), err => {
-            console.log(err, 'Something went wrong setting items');
-        });
+        if (todos.length > 0) {
+            AsyncStorage.setItem('todos', JSON.stringify(todos), answer => {
+                if (answer === null) { console.log(`Sucess setting items: ${JSON.stringify(todos)}`) }
+                else { console.log(answer, 'Something went wrong setting items'); }
+            });
+        }
     };
 
     handleButtonPress = () => {
