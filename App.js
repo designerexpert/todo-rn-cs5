@@ -11,13 +11,18 @@ import {
 import { StackNavigator } from 'react-navigation';
 import TodoList from './TodoList';
 
-const Home = () => {
-  return (
-    <View style={container}>
-      <Text>Home Page</Text>
-      <Button title='Get to My Todos!' onPress={() => props.navigation.navigate('TodoList')} />
-    </View>
-  );
+class Home extends React.Component {
+  render() {
+    return (
+      <View style={container}>
+        <Text>Home Page Test</Text>
+        <Button
+          title='Get to My Todos!'
+          onPress={() => this.props.navigation.navigate('TodoList')}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -65,4 +70,8 @@ const Routes = StackNavigator({
   TodoList: { screen: TodoList }
 });
 
-export default Routes;
+export default class App extends React.Component {  // Only way to get Routes to work at least on Adroid
+  render() {
+    return <Routes />
+  }
+};

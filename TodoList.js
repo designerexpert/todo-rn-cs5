@@ -38,7 +38,7 @@ export default class TodoList extends React.Component {
         }
     };
 
-    componentWillMount() {
+    componentWillUnmount() {
         const todos = this.state.todos.slice();
         AsyncStorage.setItem('todos', JSON.stringify(todos), err => {
             console.log(err, 'Something went wrong setting items');
